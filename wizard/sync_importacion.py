@@ -163,7 +163,7 @@ class StaSyncImportacion(models.TransientModel):
                     if codigo_producto_excel not in lineas_inventario:
                         logging.warn(' no existe')
                     else:
-                        lista_codigos[codigo_producto_excel]['linea'].product_qty = cantidad
+                        lineas_inventario[codigo_producto_excel]['linea'].product_qty = cantidad
                         logging.warn('si esta')
 
 
