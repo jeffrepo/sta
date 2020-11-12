@@ -121,11 +121,11 @@ class StaSyncImportacion(models.TransientModel):
                             product_id = self.env['product.template'].create({'name': nombre_producto_excel,'default_code': int(codigo_producto_excel)})
                             logging.warn(product_id)
                         else:
-                            logging.warn(product_id)
+
                             # logging.warn('no')
                             # logging.warn(codigo_producto_excel)
                             product_id = self.env['product.template'].create({'name': nombre_producto_excel,'default_code': codigo_producto_excel})
-
+                            logging.warn(product_id)
                 # logging.warn(existe_producto)
                 # logging.warn('no')
 
