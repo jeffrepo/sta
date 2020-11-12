@@ -136,11 +136,42 @@ class StaSyncImportacion(models.TransientModel):
                 # logging.warn(existe_producto)
                 # logging.warn('no')
 
+    @api.multi
+    def inventario(self):
+        workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
+        sheet = workbook.sheet_by_index(0)
+        inventario_id = self.env['stock.inventory'].search([('state','=','confirm')])
+        lineas_inventario = {}
+        if inventario_id:
+            for linea in inventario_id.line_ids:
+                try:
+                  # lista_codigos.append(int(p.default_code))
+                  lineas_inventario[int(linea.product_id.default_code)] = {'codigo': int(linea.product_id.default_code),'linea': linea}
+                except:
+                  # lista_codigos.append(p.default_code)
+                  lineas_inventario[linea.product_id.default_code] = {'codigo': linea.product_id.default_code,'linea': linea}
+                # lineas_inventario[linea.product_id.default_code]
+
+
+            for linea in range(sheet.nrows):
+                if linea != 0:
+                    nombre_producto_excel = sheet.cell(linea, 1).value
+                    codigo_producto_excel = sheet.cell(linea, 0).value
+                    cantidad = sheet.cell(linea, 2).value
+                    costo = sheet.cell(linea, 3).value
+
+                    if codigo_producto_excel not in lineas_inventario:
+                        logging.warn(' no existe')
+                    else:
+                        lista_codigos[codigo_producto_excel]['linea'].product_qty = cantidad
+                        logging.warn('si esta')
+
+
     def sync_importacion(self):
         path = "/opt/cuentas_bancarias_prestamos_comi.xlsx"
         wb_obj = openpyxl.load_workbook(path)
         sheet_obj = wb_obj.active
-        cell_obj = sheet_obj.cell(row = 1, column = 1)
+        cell_obj = sheet_obj.cell(row = 1, column =costo 1)
         logging.warn(cell_obj.value)
         numero_filas = sheet_obj.max_row
         numero_columnas = sheet_obj.max_column
