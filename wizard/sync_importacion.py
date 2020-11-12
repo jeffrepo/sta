@@ -108,9 +108,10 @@ class StaSyncImportacion(models.TransientModel):
 
                     if codigo_producto_excel not in lista_codigos:
                         if isinstance(codigo_producto_excel, float):
-
+                            logging.warn('si')
                             logging.warn(int(codigo_producto_excel))
                         else:
+                            logging.warn('no')
                             logging.warn(codigo_producto_excel)
                 # logging.warn(existe_producto)
                 # logging.warn('no')
