@@ -99,9 +99,9 @@ class StaSyncImportacion(models.TransientModel):
                         nombre_producto_excel = sheet.cell(linea, 1).value
                         codigo_producto_excel = sheet.cell(linea, 0).value
 
-                        if int(p.default_code) == int(codigo_producto_excel):
+                        if int(p.default_code) == codigo_producto_excel:
                             existe = True
-                logging.warn(existe)            
+                logging.warn(existe)
 
     def sync_importacion(self):
         path = "/opt/cuentas_bancarias_prestamos_comi.xlsx"
