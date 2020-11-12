@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sta_sync_importaciones" model="ir.ui.view">
+            <field name="name">sta.sync.importacion</field>
+            <field name="model">sta.sync.importacion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Syncronize">
+                    <footer>
+                        <button name="sync_importacion" string="Sincronizar" type="object" class="oe_highlight"/>
+                        o
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="window_sync_importacion" name="Sincronizar importacion" res_model="sta.sync.importacion" src_model="sta.sync.importacion" view_mode="form" target="new"/>
+        <menuitem action="window_sync_importacion" id="menu_asistente_sync_importacion" parent="purchase.menu_purchase_root"/>
+
+        <record id="sta_reporte_inventario_produccion_wizard" model="ir.ui.view">
+            <field name="name">sta.reporte.inventario.produccion.wizard</field>
+            <field name="model">sta.reporte_inventario_produccion_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Inventario">
+                    <group>
+                        <field name="producto_id"/>
+                        <field name="ubicacion_id"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Imprimir reporte" type="object" class="oe_highlight"/>
+                        o
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="window_reporte_inventario" name="Reporte inventario produccion" res_model="sta.reporte_inventario_produccion_wizard" src_model="sta.reporte_inventario_produccion_wizard" view_mode="form" target="new"/>
+        <menuitem action="window_reporte_inventario" id="menu_reporte_inventario_produccion" parent="stock.menu_warehouse_report"/>
+        <report id="action_report_inventario_produccion" model="sta.reporte_inventario_produccion_wizard" string="Inventario produccion" report_type="qweb-pdf" name="sta.reporte_inventario_produccion" file="sta.reporte_inventario_produccion"/>
+
+
+        <record id="sta_reporte_libro_compras_wizard" model="ir.ui.view">
+            <field name="name">sta.reporte.libro.compras.wizard</field>
+            <field name="model">sta.reporte_libro_compras_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Compras">
+                    <group>
+                        <field name="fecha_inicio"/>
+                        <field name="fecha_fin"/>
+                    </group>
+                    <group>
+                        <field name="name" invisible="1"/>
+                        <field name="archivo" readonly="1" filename="name"/>
+                    </group>
+                    <footer>
+                        <button name="reporte_excel" string="Imprimir reporte" type="object" class="oe_highlight"/>
+                        o
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="window_reporte_libro_compras" name="Reporte Libro compras" res_model="sta.reporte_libro_compras_wizard" src_model="sta.reporte_libro_compras_wizard" view_mode="form" target="new"/>
+        <menuitem action="window_reporte_libro_compras" id="menu_reporte_libro_compras" parent="account.account_reports_management_menu"/>
+        <report id="action_report_libro_compras" model="sta.reporte_libro_compras_wizard" string="Libro compras" report_type="qweb-pdf" name="sta.reporte_libro_compras" file="sta.reporte_libro_compras"/>
+
+
+        <record id="sta_prorrateo_wizard" model="ir.ui.view">
+            <field name="name">sta.prorrateo.wizard</field>
+            <field name="model">sta.prorrateo.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Prorrateo">
+                    <group>
+                        <field name="prorrateo_id"/>
+                        <field name="name" invisible="1"/>
+                        <field name="archivo" readonly="1" filename="name"/>
+                    </group>
+                    <footer>
+                        <button name="reporte_excel" string="Imprimir reporte" type="object" class="oe_highlight"/>
+                        o
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="sta_action_prorrateo"
+            key2="client_print_multi"
+            name="Prorrateo"
+            res_model="sta.prorrateo.wizard"
+            src_model="purchase.prorrateo"
+            view_mode="form" target="new" view_type="form" />
+
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rrhh_res_company_centro_manager,hr_gt.res.company.centro.manager,hr_gt.model_res_company_centro,hr.group_hr_manager,1,1,1,1
+access_hr_prestamo_manager,hr_gt.prestamo.managment,hr_gt.model_hr_prestamo,hr.group_hr_manager,1,1,1,1
+access_hr_prestamo_linea_manager,hr_gt.prestamo.linea.managment,hr_gt.model_hr_prestamo_linea,hr.group_hr_manager,1,1,1,1
+access_hr_comision_manager,hr_gt.comision.managment,hr_gt.model_hr_comision,hr.group_hr_manager,1,1,1,1

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <menuitem id="menu_compras_prorrateo" name="Prorrateo"
+        parent="purchase.menu_procurement_management"
+        sequence="50"/> -->
+
+    <record id="sta_purchase_order_form" model="ir.ui.view">
+        <field name="name">sta.purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <button name="button_confirm" position="after">
+                <button name="calcular_descuento" type="object" string="Calcular descuento" class="oe_highlight" id="bid_descueto"/>
+            </button>
+            <field name="partner_id" position="after">
+                <field name="tipo_compra"/>
+                <field name="cliente_id"/>
+                <field name="descuento_global"/>
+            </field>
+            <field name="price_unit" position="after">
+                <!-- <field name="precio_original"/> -->
+                <!-- <field name="descuento_unitario"/> -->
+            </field>
+        </field>
+    </record>
+
+    <!-- <record id="sta_purchase_order_line_tree" model="ir.ui.view">
+        <field name="name">sta.purchase.order.line.tree</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="price_unit" position="after">
+                <field name="descuento_unitario"/>
+            </field>
+        </field>
+    </record> -->
+
+    <record id="sta_view_purchase_prorrateo_form" model="ir.ui.view">
+        <field name="name">sta.view.purchase.prorrateo.form</field>
+        <field name="model">purchase.prorrateo</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Calculo impuesto" name="calcular_impuesto" type="object" class="oe_highlight"/>
+                    <button string="Calculo productos" name="generar_lineas_compra" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="fecha"/>
+                            <field name="tipo_cambio"/>
+                            <field name="euros_a_dolar"/>
+                        </group>
+                        <group>
+                            <field name="compra_ids" widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page string="Productos">
+                                <group>
+                                    <field name="compra_prorrateo_linea">
+                                        <tree string="Lineas" editable="bottom">
+                                            <field name="product_id"/>
+                                            <field name="cantidad" sum='cantidad'/>
+                                            <field name="precio_euros" sum='precio euros'/>
+                                            <field name="descuento" sum="descuento"/>
+                                            <field name="precio_compra" sum="precio compra"/>
+                                            <field name="total_euros" sum="total euros"/>
+                                            <field name="total_item" sum="total item"/>
+                                            <field name="porcentaje" sum="porcentaje"/>
+                                            <field name="gastos_item" sum="gastos item"/>
+                                            <field name="costo_item" sum="costo item"/>
+                                            <field name="costo_unidad" sum="costo cantidad"/>
+                                            <field name="costo_por_unidad_q" sum="costo unidad Q"/>
+                                            <field name="costo_bodega" sum="costo bodega"/>
+                                            <field name="precio_unitario_iva" sum="precio unitario iva"/>
+                                        </tree>
+                                    </field>
+                                    <field name="total_por_item"/>
+                                    <field name="prorrateo_impuesto">
+                                        <tree string="Impuesto" editable="bottom">
+                                            <field name="impuesto_id"/>
+                                            <field name="valor_quetzal" sum='Total Q'/>
+                                            <field name="valor_dolar" sum='Total USD'/>
+                                            <field name="documento_ids" widget="many2many_tags"/>
+                                        </tree>
+                                    </field>
+
+                                    <field name="total_gastos_quetzales"/>
+                                    <field name="total_gastos_dolares"/>
+                                    <field name="iva"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sta_view_purchase_documento_form" model="ir.ui.view">
+        <field name="name">sta.view.purchase.documento.form</field>
+        <field name="model">purchase.documento</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                        <group>
+                            <field name="numero"/>
+                            <field name="proveedor_id"/>
+                            <field name="fecha"/>
+                            <field name="factura"/>
+                        </group>
+                        <group>
+                            <field name="euros_a_dolar"/>
+                            <field name="dolar_a_quetzal"/>
+                        </group>
+                        <notebook>
+                            <page string="Productos">
+                                <group>
+                                    <field name="linea_ids">
+                                        <tree string="Lineas" editable="bottom">
+                                            <field name="product_id"/>
+                                            <field name="total_euro" sum="Total Euro"/>
+                                            <field name="total_dolar" sum="Total Dolar"/>
+                                            <field name="subtotal" sum="Subtotal"/>
+                                            <field name="total" sum='cantidad'/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group>
+                                    <field name="subtotal"/>
+                                    <field name="total"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sta_view_purchase_prorrateo_tree" model="ir.ui.view">
+        <field name="name">sta.purchase.prorrateo.tree</field>
+        <field name="model">purchase.prorrateo</field>
+        <field name="arch" type="xml">
+            <tree string="Prorrateos">
+                <field name="name"/>
+                <field name="fecha"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_sta_purchase_prorrateo_form" model="ir.actions.act_window">
+        <field name="name">Prorrateo</field>
+        <field name="res_model">purchase.prorrateo</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain" eval="False"/>
+        <field name="context"></field>
+        <field name="view_id" ref="sta_view_purchase_prorrateo_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+          </p>
+        </field>
+    </record>
+
+    <menuitem action="action_sta_purchase_prorrateo_form" id="menu_action_sta_purchase_prorrateo_form" parent="purchase.menu_procurement_management" sequence="3"/>
+
+
+</odoo>
