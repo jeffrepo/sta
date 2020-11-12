@@ -107,7 +107,7 @@ class StaSyncImportacion(models.TransientModel):
                     codigo_producto_excel = sheet.cell(linea, 0).value
 
                     if codigo_producto_excel not in lista_codigos:
-                        if codigo_producto_excel.isdigit():
+                        if isinstance(codigo_producto_excel, float):
 
                             logging.warn(int(codigo_producto_excel))
                         else:
