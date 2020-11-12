@@ -8,9 +8,14 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Syncronize">
+                    <group>
+                        <field name="archivo" required="1"/>
+                    </group>
                     <footer>
                         <button name="sync_importacion" string="Sincronizar" type="object" class="oe_highlight"/>
                         <button name="codigo_productos" string="Codigo producos" type="object" class="oe_highlight"/>
+                        <button name="leer_excel_productos" string="verificar" type="object" class="oe_highlight"/>
+
                         o
                         <button special="cancel" string="Cancel" class="oe_link"/>
                     </footer>

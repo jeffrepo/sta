@@ -18,9 +18,17 @@ import glob
 import time
 import openpyxl
 
+import base64
+import xlsxwriter
+import io
+import logging
+import xlrd
+import base64
 
 class StaSyncImportacion(models.TransientModel):
     _name = 'sta.sync.importacion'
+
+    archivo = fields.Binary('Archivo excel')
 
     @api.multi
     def codigo_productos(self):
@@ -43,6 +51,43 @@ class StaSyncImportacion(models.TransientModel):
             'type': 'ir.actions.act_window',
             'target': 'new',
         }
+
+    @api.multi
+    def leer_excel_productos(self):
+        workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
+        sheet = workbook.sheet_by_index(0)
+        productos = self.env['product.template'].search([('default_code','=',False)])
+        if productos:
+            logging.warn(len(productos))
+            for p in productos:
+
+                for linea in range(sheet.nrows):
+                    if linea != 0:
+                        # fecha_excel = sheet.cell(linea, 10).value
+                        # fecha_excel = fecha_excel.replace("'", "")
+
+                        # fecha = datetime.datetime(*xlrd.xldate_as_tuple(fecha_excel, workbook.datemode))
+                        nombre_producto_excel = sheet.cell(linea, 1).value
+                        codigo_producto_excel = sheet.cell(linea, 0).value
+
+                        if str(p.name) == str(nombre_producto_excel):
+                            logging.warn(p.name)
+                            p.default_code = str(codigo_producto_excel)
+
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'sta.sync.importacion',
+            'res_id': self.id,
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
+    # @api.multi
+    # def crear_productos_existentes(self):
+    #     workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
+    #     sheet = workbook.sheet_by_index(0)
 
 
 
