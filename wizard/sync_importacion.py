@@ -171,7 +171,7 @@ class StaSyncImportacion(models.TransientModel):
         path = "/opt/cuentas_bancarias_prestamos_comi.xlsx"
         wb_obj = openpyxl.load_workbook(path)
         sheet_obj = wb_obj.active
-        cell_obj = sheet_obj.cell(row = 1, column =costo 1)
+        cell_obj = sheet_obj.cell(row = 1, column = 1)
         logging.warn(cell_obj.value)
         numero_filas = sheet_obj.max_row
         numero_columnas = sheet_obj.max_column
