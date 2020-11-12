@@ -89,13 +89,17 @@ class StaSyncImportacion(models.TransientModel):
         workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
         sheet = workbook.sheet_by_index(0)
         productos = self.env['product.template'].search([('default_code','!=',False)])
-        lista_codigos = []
+        lista_codigos = {}
         if productos:
             for p in productos:
+
+
                 try:
-                  lista_codigos.append(int(p.default_code))
+                  # lista_codigos.append(int(p.default_code))
+                  lista_codigos[int(p.default_code)] = {'codigo': int(p.default_code),'producto': p}
                 except:
-                  lista_codigos.append(p.default_code)
+                  # lista_codigos.append(p.default_code)
+                  lista_codigos[p.default_code] = {'codigo': p.default_code,'producto': p}
                 # if isinstance(p.default_code, float):
                 #     lista_codigos.append(int(p.default_code))
                 # else:
@@ -126,6 +130,8 @@ class StaSyncImportacion(models.TransientModel):
                             # logging.warn(codigo_producto_excel)
                             product_id = self.env['product.template'].create({'name': nombre_producto_excel,'default_code': codigo_producto_excel})
                             logging.warn(product_id)
+                    else:
+                        logging.warn('si esta')
                 # logging.warn(existe_producto)
                 # logging.warn('no')
 
