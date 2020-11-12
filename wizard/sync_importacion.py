@@ -92,7 +92,14 @@ class StaSyncImportacion(models.TransientModel):
         lista_codigos = []
         if productos:
             for p in productos:
-                lista_codigos.append(int(p.default_code))
+                try:
+                  lista_codigos.append(int(p.default_code))
+                except:
+                  lista_codigos.append(p.default_code)
+                # if isinstance(p.default_code, float):
+                #     lista_codigos.append(int(p.default_code))
+                # else:
+                #     lista_codigos.append(p.default_code)
 
 
             contador = 0
