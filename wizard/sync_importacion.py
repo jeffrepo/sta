@@ -104,10 +104,14 @@ class StaSyncImportacion(models.TransientModel):
             for linea in range(sheet.nrows):
                 if linea != 0:
                     nombre_producto_excel = sheet.cell(linea, 1).value
-                    codigo_producto_excel = sheet.cell(linea, 0).astype('str')
+                    codigo_producto_excel = sheet.cell(linea, 0).value
 
                     if codigo_producto_excel not in lista_codigos:
-                        logging.warn(codigo_producto_excel)
+                        if codigo_producto_excel.isnumeric():
+
+                            logging.warn(int(codigo_producto_excel))
+                        else:
+                            logging.warn(codigo_producto_excel)    
                 # logging.warn(existe_producto)
                 # logging.warn('no')
 
