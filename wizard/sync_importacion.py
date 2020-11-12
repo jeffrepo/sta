@@ -116,7 +116,7 @@ class StaSyncImportacion(models.TransientModel):
                 if linea != 0:
                     nombre_producto_excel = sheet.cell(linea, 1).value
                     codigo_producto_excel = sheet.cell(linea, 0).value
-
+                    costo = sheet.cell(linea, 3).value
 
                     if codigo_producto_excel not in lista_codigos:
                         if isinstance(codigo_producto_excel, float):
@@ -131,6 +131,7 @@ class StaSyncImportacion(models.TransientModel):
                             product_id = self.env['product.template'].create({'name': nombre_producto_excel,'default_code': codigo_producto_excel})
                             logging.warn(product_id)
                     else:
+                        lista_codigos[codigo_producto_excel]['producto'].standard_price = costo
                         logging.warn('si esta')
                 # logging.warn(existe_producto)
                 # logging.warn('no')
