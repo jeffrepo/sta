@@ -10,6 +10,7 @@
                 <form string="Syncronize">
                     <footer>
                         <button name="sync_importacion" string="Sincronizar" type="object" class="oe_highlight"/>
+                        <button name="codigo_productos" string="Codigo producos" type="object" class="oe_highlight"/>
                         o
                         <button special="cancel" string="Cancel" class="oe_link"/>
                     </footer>

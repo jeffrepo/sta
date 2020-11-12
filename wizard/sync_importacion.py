@@ -22,6 +22,30 @@ import openpyxl
 class StaSyncImportacion(models.TransientModel):
     _name = 'sta.sync.importacion'
 
+    @api.multi
+    def codigo_productos(self):
+        productos = self.env['product.template'].search([('default_code','=',False)])
+        if productos:
+            logging.warn(len(productos))
+            for p in productos:
+                strin_split = p.name.split()
+                logging.warn(strin_split)
+                if strin_split[0].isnumeric():
+                    logging.warn(strin_split[0])
+                    p.default_code = strin_split[0]
+
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'sta.sync.importacion',
+            'res_id': self.id,
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
+
+
     def sync_importacion(self):
         path = "/opt/cuentas_bancarias_prestamos_comi.xlsx"
         wb_obj = openpyxl.load_workbook(path)
