@@ -90,6 +90,7 @@ class StaSyncImportacion(models.TransientModel):
         sheet = workbook.sheet_by_index(0)
         productos = self.env['product.template'].search([('default_code','!=',False)])
         if productos:
+            contador = 0
             for p in productos:
                 # logging.warn(p.default_code)
                 # logging.warn(int(p.default_code))
@@ -99,13 +100,9 @@ class StaSyncImportacion(models.TransientModel):
                     if linea != 0:
                         nombre_producto_excel = sheet.cell(linea, 1).value
                         codigo_producto_excel = sheet.cell(linea, 0).value
-                        existe_producto = codigo_producto_excel
-                        logging.warn(existe_producto)
-                        if int(p.default_code) == codigo_producto_excel:
-                            existe = True
-
-
-
+                        buscar_producto = self.env['product.template'].search([('default_code','=',codigo_producto_excel)])
+                        if !buscar_producto:
+                            logging.warn(codigo_producto_excel)
                 # logging.warn(existe_producto)
                 # logging.warn('no')
 
