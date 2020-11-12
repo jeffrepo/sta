@@ -84,11 +84,15 @@ class StaSyncImportacion(models.TransientModel):
             'target': 'new',
         }
 
-    # @api.multi
-    # def crear_productos_existentes(self):
-    #     workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
-    #     sheet = workbook.sheet_by_index(0)
-
+    @api.multi
+    def crear_productos_existentes(self):
+        workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
+        sheet = workbook.sheet_by_index(0)
+        productos = self.env['product.template'].search([('default_code','!=',False)])
+        if productos:
+            for p in productos:
+                logging.warn(p.default_code)
+                logging.warn(int(p.default_code))
 
 
     def sync_importacion(self):

@@ -15,7 +15,7 @@
                         <button name="sync_importacion" string="Sincronizar" type="object" class="oe_highlight"/>
                         <button name="codigo_productos" string="Codigo producos" type="object" class="oe_highlight"/>
                         <button name="leer_excel_productos" string="verificar" type="object" class="oe_highlight"/>
-
+                        <button name="crear_productos_existentes" string="crear productos exist" type="object" class="oe_highlight"/>
                         o
                         <button special="cancel" string="Cancel" class="oe_link"/>
                     </footer>
