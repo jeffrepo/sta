@@ -223,16 +223,16 @@ class PurchaseDocumentoLinea(models.Model):
     total_dolar = fields.Float('Total dolar')
     total = fields.Float('total')
 
-    # @api.onchange('total','total_euro','total_dolar','product_id')
-    # def change_total(self):
-    #     if self.total_euro > 0:
-    #         self.total_dolar = self.total_euro / self.documento_id.euros_a_dolar
-    #     if self.total_dolar > 0:
-    #         self.total = self.total_dolar * self.documento_id.dolar_a_quetzal
-    #     if self.total > 0 and self.product_id.supplier_taxes_id:
-    #         self.subtotal = self.total/1.12
-    #     if self.total > 0 and self.documento_id.euros_a_dolar > 0:
-    #         self.subtotal = self.total
+    @api.onchange('total','total_euro','total_dolar','product_id')
+    def change_total(self):
+        if self.total_euro > 0:
+            self.total_dolar = self.total_euro / self.documento_id.euros_a_dolar
+        if self.total_dolar > 0:
+            self.total = self.total_dolar * self.documento_id.dolar_a_quetzal
+        if self.total > 0 and self.product_id.supplier_taxes_id:
+            self.subtotal = self.total/1.12
+        if self.total > 0 and self.documento_id.euros_a_dolar > 0:
+            self.subtotal = self.total
     # def _get_monto(self):
     #     for linea in self:
     #         linea.valor_quetzal = linea.valor_dolar * self.prorrateo_id.tipo_cambio
