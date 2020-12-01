@@ -300,3 +300,31 @@ class StaSyncImportacion(models.TransientModel):
             'type': 'ir.actions.act_window',
             'target': 'new',
         }
+
+
+
+    @api.multi
+    def leer_excel_productos(self):
+        workbook = xlrd.open_workbook(file_contents = base64.decodestring(self.archivo))
+        sheet = workbook.sheet_by_index(0)
+        # for linea in range(sheet.nrows):
+        #     if linea != 0:
+        #         contador = 1
+        #         codigo_producto_excel = sheet.cell(linea, 0).value
+        #
+        #             for linea_c in range(sheet.nrows):
+        #                 if linea_c != 0:
+        #                     codigo_c = sheet.cell(linea_c, 0).value
+        #                     if str(codigo_producto_excel) == str(codigo_c):
+        #                         logging.warn(contador)
+        #                         contado += 1
+
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'sta.sync.importacion',
+            'res_id': self.id,
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }

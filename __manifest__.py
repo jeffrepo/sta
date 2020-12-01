@@ -10,7 +10,7 @@
     'description': """
 
 """,
-    'depends': ['purchase','product','mrp','stock'],
+    'depends': ['purchase','product','stock','sale'],
     'data': [
         'views/reporte_inventario_produccion.xml',
         'views/report.xml',

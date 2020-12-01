@@ -166,7 +166,7 @@
         </field>
     </record>
 
-    <menuitem action="action_sta_purchase_prorrateo_form" id="menu_action_sta_purchase_prorrateo_form" parent="purchase.menu_procurement_management" sequence="3"/>
+    <menuitem action="action_sta_purchase_prorrateo_form" id="menu_action_sta_purchase_prorrateo_form" parent="purchase.menu_procurement_management" sequence="100"/>
 
 
 </odoo>
