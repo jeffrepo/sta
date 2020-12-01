@@ -79,11 +79,15 @@
                                     </field>
                                     <field name="total_por_item"/>
                                     <field name="prorrateo_impuesto">
-                                        <tree string="Impuesto" editable="bottom">
+                                        <tree string="Impuesto">
                                             <field name="impuesto_id"/>
                                             <field name="valor_quetzal" sum='Total Q'/>
                                             <field name="valor_dolar" sum='Total USD'/>
-                                            <field name="documento_ids" widget="many2many_tags"/>
+                                            <field name="documento_ids">
+                                                <tree string="Documento" editable="bottom">
+                                                    <field name="numero"/>
+                                                </tree>
+                                            </field>
                                         </tree>
                                     </field>
 
