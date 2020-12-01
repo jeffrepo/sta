@@ -23,7 +23,7 @@ class StockMove(models.Model):
                     if self.purchase_line_id.order_id.id in prorrateo.compra_ids.ids:
                         for linea in prorrateo.compra_prorrateo_linea:
                             if self.product_id.id == linea.product_id.id:
-                                costo = linea.costo_unidad
+                                costo = linea.costo_por_unidad_q
                                 logging.warn('si lo encuentra')
                                 return costo
             # for l in self.purchase_line_id.order_id.poliza_id.lineas_ids:
