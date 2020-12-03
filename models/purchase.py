@@ -46,7 +46,7 @@ class PurchaseProrrateo(models.Model):
     tipo_cambio = fields.Float('Tipo de cambio',digits = (12,4))
     compra_ids = fields.Many2many('purchase.order','sta_prorrateo_compra_rel',string="Pedidos de compra")
     compra_prorrateo_linea = fields.One2many('purchase.prorrateo_line','prorrateo_id', string="linea prorrateo")
-    prorrateo_impuesto = fields.One2many('purchase.prorrateo_impuesto', 'prorrateo_id', 'Prorrateo impuesto', default= default_impuestos,copy=True)
+    prorrateo_impuesto = fields.One2many('purchase.prorrateo_impuesto', 'prorrateo_id', 'Prorrateo impuesto',copy=True)
     euros_a_dolar = fields.Float('Euros a dolar')
     total_gastos_quetzales = fields.Float('Total gastos Q.')
     total_gastos_dolares = fields.Float('Total gastos $.')
