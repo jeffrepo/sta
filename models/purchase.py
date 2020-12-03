@@ -37,9 +37,9 @@ class PurchaseOrder(models.Model):
 class PurchaseProrrateo(models.Model):
     _name = "purchase.prorrateo"
 
-    def default_impuestos(self):
-        gs = self.env['account.tax'].search([('prorrateo','=',True)])
-        return [(0, 0, {'impuesto_id': i.id, 'valor_quetzal': 0,'valor_dolar':0}) for i in gs]
+    # def default_impuestos(self):
+    #     gs = self.env['account.tax'].search([('prorrateo','=',True)])
+    #     return [(0, 0, {'impuesto_id': i.id, 'valor_quetzal': 0,'valor_dolar':0}) for i in gs]
 
     name = fields.Char('Nombre')
     fecha = fields.Date('Fecha')
