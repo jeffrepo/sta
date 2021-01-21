@@ -12,6 +12,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     marca_id = fields.Many2one('product.marca','Marca')
+    empleados = fields.Boolean('Empleados')
 
 class ProductMarca(models.Model):
     _name = 'product.marca'

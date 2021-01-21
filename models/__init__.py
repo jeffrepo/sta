@@ -7,3 +7,4 @@ from . import purchase_mrp
 from . import stock_picking
 # from . import stock_quant
 from . import sale
+from . import project

@@ -23,3 +23,8 @@ class AccountTax(models.Model):
     _inherit = "account.tax"
 
     prorrateo = fields.Boolean('Prorrateo')
+
+class AccountAnalyticLine(models.Model):
+    _inherit = "account.analytic.line"
+
+    horas_extras = fields.Float('Horas extras')

@@ -22,3 +22,8 @@ class SaleOrderLine(models.Model):
                 record.price_unit = (record.product_uom_qty * record.price_unit )*record.dias
             elif record.noches > 0:
                 record.price_unit = (record.product_uom_qty * record.price_unit )*record.noches
+
+class SaleOrderOption(models.Model):
+    _inherit = 'sale.order.option'
+
+    costo = fields.Float('Costo presupuestado')

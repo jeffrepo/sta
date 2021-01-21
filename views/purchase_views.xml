@@ -16,6 +16,7 @@
             <field name="partner_id" position="after">
                 <field name="tipo_compra"/>
                 <field name="cliente_id"/>
+                <field name="proyecto_id"/>
                 <field name="descuento_global"/>
             </field>
             <field name="price_unit" position="after">

@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, SUPERUSER_ID, _
 import odoo.addons.decimal_precision as dp
 import logging
+from odoo.exceptions import UserError, ValidationError
 
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
@@ -13,6 +14,8 @@ class PurchaseOrder(models.Model):
     tipo_compra = fields.Selection([('antencion', 'Atencion cliente'),('gastos','Gastos de venta')], string="Tipo")
     cliente_id = fields.Many2one('res.partner','Cliente')
     descuento_global = fields.Float('% Descuento global')
+    proyecto_id = fields.Many2one('project.project','Poyecto')
+    bloqueado = fields.Boolean('Bloqueado')
 
     def calcular_descuento(self):
         if self.descuento_global > 0:
@@ -26,6 +29,37 @@ class PurchaseOrder(models.Model):
                 linea.price_unit = linea.price_unit * (1 - linea.discount / 100)
 
         return True
+
+    def buscar_producto_compras_proyecto(self,proyecto_id ,producto_id,compra_id):
+        valor = 0
+        compra_ids = self.env['purchase.order'].search([('proyecto_id','=',proyecto_id.id),('id','!=',compra_id.id)])
+        if compra_ids:
+            for compra in compra_ids:
+                if compra.order_line:
+                    for linea in compra.order_line:
+                        if linea.product_id.id == producto_id.id:
+                            valor += linea.price_total
+
+        return valor
+
+    @api.onchange('order_line')
+    def change_lineas_compra(self):
+        for compra in self:
+            if compra.proyecto_id and compra.proyecto_id.sale_order_id and compra.order_line:
+                for linea in compra.order_line:
+                    for linea_venta in compra.proyecto_id.sale_order_id.sale_order_option_ids:
+                        if linea.product_id.id == linea_venta.product_id.id:
+                            logging.warn('si')
+                            valor = self.buscar_producto_compras_proyecto(compra.proyecto_id,linea.product_id,compra)
+                            if (linea.price_total + valor) > linea_venta.costo and self.env.user.id not in [2,6]:
+                                logging.warn('if')
+                                raise UserError(_('Límite de presupuesto, favor pedir autorización'))
+                            elif (linea.price_total + valor) > linea_venta.costo and self.env.user.id in [2,6]:
+                                logging.warn(self.env.user.id)
+                                logging.warn('else')
+                                return
+
+
 
     # descuento_unitario = fields.Float('Desc. Uni')
 
