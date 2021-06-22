@@ -32,7 +32,8 @@ class PurchaseOrder(models.Model):
 
     def buscar_producto_compras_proyecto(self,proyecto_id ,producto_id,compra_id):
         valor = 0
-        compra_ids = self.env['purchase.order'].search([('proyecto_id','=',proyecto_id.id),('id','!=',compra_id.id)])
+        # compra_ids = self.env['purchase.order'].search([('proyecto_id','=',proyecto_id.id),('id','!=',compra_id.id)])
+        compra_ids = self.env['purchase.order'].search([('proyecto_id','=',proyecto_id.id)])
         if compra_ids:
             for compra in compra_ids:
                 if compra.order_line:
