@@ -11,10 +11,4 @@ from odoo.tools.float_utils import float_round
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    marca_id = fields.Many2one('product.marca','Marca')
-    empleados = fields.Boolean('Empleados')
-
-class ProductMarca(models.Model):
-    _name = 'product.marca'
-
-    name = fields.Char('Marca')
+    agrupar_gastos = fields.Boolean('Agrupar gastos en SO')
