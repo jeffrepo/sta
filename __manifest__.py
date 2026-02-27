@@ -19,7 +19,7 @@
         # 'views/stock_picking_views.xml',
         # 'views/purchase_views.xml',
         # 'views/stock_quant_views.xml',
-        'views/sale_views.xml',
+        #'views/sale_views.xml',
         # 'views/project_views.xml',
     ],
     'installable': True,
