@@ -40,25 +40,25 @@ class SaleOrder(models.Model):
     #         elif record.noches > 0:
     #             record.price_unit = (record.product_uom_qty * record.price_unit )*record.noches
 
-class SaleOrderOption(models.Model):
-    _inherit = 'sale.order.option'
+# class SaleOrderOption(models.Model):
+#     _inherit = 'sale.order.option'
 
-    costo = fields.Float('Costo')
+#     costo = fields.Float('Costo')
 
-    @api.onchange('product_id','quantity','costo')
-    def on_change_linea(self):
-        for record in self:
-            if record.product_id:
-                product = record.product_id.with_context(
-                    partner=record.order_id.partner_id,
-                    quantity=record.quantity,
-                    date=record.order_id.date_order,
-                    pricelist=record.order_id.pricelist_id.id,
-                    uom=record.uom_id.id,
-                    standard_price = 2,
-                )
-                record.product_id.standard_price = record.costo
-                precio = record.order_id.pricelist_id.get_product_price(product, record.uom_id, record.order_id.partner_id, record.order_id.date_order, record.uom_id.id)
-                logging.warning('precio')
-                logging.warning(precio)
-                record.price_unit = precio
+#     @api.onchange('product_id','quantity','costo')
+#     def on_change_linea(self):
+#         for record in self:
+#             if record.product_id:
+#                 product = record.product_id.with_context(
+#                     partner=record.order_id.partner_id,
+#                     quantity=record.quantity,
+#                     date=record.order_id.date_order,
+#                     pricelist=record.order_id.pricelist_id.id,
+#                     uom=record.uom_id.id,
+#                     standard_price = 2,
+#                 )
+#                 record.product_id.standard_price = record.costo
+#                 precio = record.order_id.pricelist_id.get_product_price(product, record.uom_id, record.order_id.partner_id, record.order_id.date_order, record.uom_id.id)
+#                 logging.warning('precio')
+#                 logging.warning(precio)
+#                 record.price_unit = precio
